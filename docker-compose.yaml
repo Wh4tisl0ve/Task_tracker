@@ -1,0 +1,22 @@
+services:
+  postgres:
+    container_name: dbtask_tracker
+    image: postgres:16-alpine
+    ports:
+      - 5433:5432
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data/
+    env_file:
+      - ./task_tracker/.env
+  rabbit_mq:
+    container_name: message_broker_rabbit
+    image: rabbitmq:4.0.5-management
+    ports:
+      - 15673:15672
+    volumes:
+      - ./.rabbitmq:/var/lib/rabbitmq
+    env_file:
+      - ./task_tracker/.env
+
+volumes:
+  postgres_volume:
